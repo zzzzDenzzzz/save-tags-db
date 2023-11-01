@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model IndexViewModel
+
+<div class="row">
+    <div class="col-2">
+        <div class="row">
+            <h3>Categories</h3>
+            <hr />
+            <div class="list-group">
+                @if (Model.Categories != null)
+                {
+                    foreach (var item in @Model.Categories)
+                    {
+                        <a href="#" class="list-group-item list-group-item-action">@item.Name</a>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row">
+            <h3>Tags</h3>
+            <hr />
+            <div class="list-group">
+                @if (Model.Tags != null)
+                {
+                    foreach (var item in @Model.Tags)
+                    {
+                        <a href="#" class="list-group-item list-group-item-action">@item.Name</a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-10">
+        @if (TempData.ContainsKey("status"))
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Messages!</strong>@TempData["status"].
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (Model.Posts != null && Model.Posts.Count() > 0)
+        {
+            <div class="row">
+                @foreach (var item in Model.Posts)
+                {
+                    <div class="card col-4" style="width: 18rem;">
+                        <img src="@item.ImageUrl" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">@Html.Raw(@item.Content)</p>
+                            <p>@item.Date</p>
+                            <p>@item.Category.Name</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
