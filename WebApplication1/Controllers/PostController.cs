@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using WebApplication1.ViewModels;
 
@@ -25,7 +26,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var posts = blogDbContext.Posts;
+            var posts = blogDbContext.Posts
+                .Include(x => x.PostTags)
+                .ThenInclude(x => x.Tag)
+                .Include(x => x.Category);
             var categories = blogDbContext.Categories;
             var tags = blogDbContext.Tags;
 
